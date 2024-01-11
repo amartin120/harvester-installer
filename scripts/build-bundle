@@ -136,7 +136,6 @@ image_list_file="${IMAGES_LISTS_DIR}/rke2-images.linux-amd64-${RKE2_VERSION_NORM
 image_archive="${IMAGES_DIR}/rke2-images.linux-amd64-${RKE2_VERSION_NORMALIZED}.tar.zst"
 get_url "${RKE2_IMAGES_URL}/rke2-images.linux-amd64.txt" $image_list_file
 #get_url "${RKE2_IMAGES_URL}/rke2-images.linux-amd64.tar.zst" $image_archive
-sed -i 's/docker.io/rgcrprod.azurecr.us/g' ${image_list_file}
 save_image "rke2" $BUNDLE_DIR $image_list_file ${IMAGES_DIR}
 #add_image_list_to_metadata "rke2" $BUNDLE_DIR $image_list_file $image_archive
 
