@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# authenticate to the carbide registry
+echo "provide credentials to the carbide registry (rgcrprod.azurecr.us)"
+docker login rgcrprod.azurecr.us
+
 # Prefix registry to images
 # rancher -> docker.io/library/rancher
 # rancher/rancher -> docker.io/rancher/rancher
@@ -49,11 +53,21 @@ pull_images() {
   local repository
 
   if [ -z "$USE_LOCAL_IMAGES" ]; then
-    xargs -n1 -t docker image pull --quiet < $image_list
+    for image in $(cat $image_list); do
+      # Replace the registry name with a custom registry
+      carbide_registry="rgcrprod.azurecr.us"
+      carbide_image=$(echo $image | sed "s|[^/]*\/|$carbide_registry/|")
+
+      echo "$carbide_image: pulling..."
+      docker pull $carbide_image
+
+      # Tag the image back to the original name
+      docker tag $carbide_image $image
+    done
     return
   fi
 
-  # If an image is in the exlcude list or its tag ends with "-head", we always pull it.
+  # If an image is in the exclude list or its tag ends with "-head", we always pull it.
   # Otherwise, we check if the image exists on the system. If yes, we do nothing.
   for image in $(cat $image_list); do
     repository=$(echo $image | awk -F ':' '{print $1}')
@@ -70,10 +84,17 @@ pull_images() {
         echo "[ImageCache] $image exists."
         continue
       fi
-    fi
 
-    echo "[ImageCache] $image: pulling..."
-    docker pull $image
+      # Replace the registry name with a custom registry
+      carbide_registry="rgcrprod.azurecr.us"
+      carbide_image=$(echo $image | sed "s|[^/]*\/|$carbide_registry/|")
+
+      echo "[ImageCache] $carbide_image: pulling..."
+      docker pull $carbide_image
+
+      # Tag the image back to the original name
+      docker tag $carbide_image $image
+    fi
   done
 }
 
