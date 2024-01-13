@@ -37,12 +37,18 @@ const (
 	defaultCustomConfig    = "/oem/99_custom.yaml"
 
 	logo string = `
-██╗░░██╗░█████╗░██████╗░██╗░░░██╗███████╗░██████╗████████╗███████╗██████╗░░░░░░░░░░░░██████╗░█████╗░██████╗░██████╗░████████╗██████╗░███████╗
-██║░░██║██╔══██╗██╔══██╗██║░░░██║██╔════╝██╔════╝╚══██╔══╝██╔════╝██╔══██╗░░░░░░░░░░██╔════╝██╔══██╗██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗██╔════╝
-███████║███████║█████╔╝╚██╗░░██╔╝█████╗░░╚█████╗░░░░██║░░░█████╗░░██████╔╝░░██████░░██║░░░░░███████║██████╔╝██████╔╝░░░██║░░░██║░░██║█████╗░░
-██╔══██║██╔══██║██╔══██╗░╚████╔╝░██╔══╝░░░╚═══██╗░░░██║░░░██╔══╝░░██╔══██╗░░╚════╝░░██║░░░░░██╔══██║██╔══██╗██╔══██╗░░░██║░░░██║░░██║██╔══╝░░
-██║░░██║██║░░██║██║░░██║░░╚██╔╝░░███████╗██████╔╝░░░██║░░░███████╗██║░░██║░░░░░░░░░░╚██████╗██║░░██║██║░░██║██████╔╝████████╗██████╔╝███████╗
-╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░╚══════╝╚═════╝░░░░╚═╝░░░╚══════╝╚═╝░░╚═╝░░░░░░░░░░░╚═════╝╚═╝░░╚═╝╚═╝░░╚═╝╚═════╝░╚═══════╝╚═════╝░╚══════╝`
+██╗░░██╗░█████╗░██████╗░██╗░░░██╗███████╗░██████╗████████╗███████╗██████╗░
+██║░░██║██╔══██╗██╔══██╗██║░░░██║██╔════╝██╔════╝╚══██╔══╝██╔════╝██╔══██╗
+███████║███████║█████╔╝╚██╗░░██╔╝█████╗░░╚█████╗░░░░██║░░░█████╗░░██████╔╝
+██╔══██║██╔══██║██╔══██╗░╚████╔╝░██╔══╝░░░╚═══██╗░░░██║░░░██╔══╝░░██╔══██╗
+██║░░██║██║░░██║██║░░██║░░╚██╔╝░░███████╗██████╔╝░░░██║░░░███████╗██║░░██║
+╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░╚══════╝╚═════╝░░░░╚═╝░░░╚══════╝╚═╝░░╚═╝
+        ░██████╗░█████╗░██████╗░██████╗░████████╗██████╗░███████╗
+        ██╔════╝██╔══██╗██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗██╔════╝
+        ██║░░░░░███████║██████╔╝██████╔╝░░░██║░░░██║░░██║█████╗░░
+        ██║░░░░░██╔══██║██╔══██╗██╔══██╗░░░██║░░░██║░░██║██╔══╝░░
+        ╚██████╗██║░░██║██║░░██║██████╔╝████████╗██████╔╝███████╗
+        ░╚═════╝╚═╝░░╚═╝╚═╝░░╚═╝╚═════╝░╚═══════╝╚═════╝░╚══════╝`
 )
 
 
@@ -88,13 +94,13 @@ func (c *Console) layoutDashboard(g *gocui.Gui) error {
 
 func clusterPanel(g *gocui.Gui) error {
 	maxX, _ := g.Size()
-	if v, err := g.SetView("clusterPanel", maxX/2-40, 10, maxX/2+35, 15); err != nil {
+	if v, err := g.SetView("clusterPanel", maxX/2-40, 17, maxX/2+35, 22); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
 		v.Title = " Harvester Cluster "
 	}
-	if v, err := g.SetView("managementUrl", maxX/2-39, 10, maxX/2+34, 13); err != nil {
+	if v, err := g.SetView("managementUrl", maxX/2-39, 17, maxX/2+34, 20); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -103,7 +109,7 @@ func clusterPanel(g *gocui.Gui) error {
 		fmt.Fprintln(v, "* Management URL:\n  loading...")
 		go syncManagementURL(context.Background(), g)
 	}
-	if v, err := g.SetView("clusterStatus", maxX/2-39, 13, maxX/2+34, 15); err != nil {
+	if v, err := g.SetView("clusterStatus", maxX/2-39, 20, maxX/2+34, 22); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -117,13 +123,13 @@ func clusterPanel(g *gocui.Gui) error {
 
 func nodePanel(g *gocui.Gui) error {
 	maxX, _ := g.Size()
-	if v, err := g.SetView("nodePanel", maxX/2-40, 16, maxX/2+35, 21); err != nil {
+	if v, err := g.SetView("nodePanel", maxX/2-40, 23, maxX/2+35, 28); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
 		v.Title = " Node "
 	}
-	if v, err := g.SetView("nodeInfo", maxX/2-39, 16, maxX/2+34, 19); err != nil {
+	if v, err := g.SetView("nodeInfo", maxX/2-39, 23, maxX/2+34, 26); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -132,7 +138,7 @@ func nodePanel(g *gocui.Gui) error {
 		fmt.Fprintln(v, "* Hostname: loading...\n* IP Address: loading...")
 		go syncNodeInfo(context.Background(), g)
 	}
-	if v, err := g.SetView("nodeStatus", maxX/2-39, 19, maxX/2+34, 21); err != nil {
+	if v, err := g.SetView("nodeStatus", maxX/2-39, 26, maxX/2+34, 28); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -158,13 +164,13 @@ func footer(g *gocui.Gui) error {
 
 func logoPanel(g *gocui.Gui) error {
 	maxX, _ := g.Size()
-	if v, err := g.SetView("logo", maxX/2-40, 1, maxX/2+40, 9); err != nil {
+	if v, err := g.SetView("logo", maxX/2-40, 1, maxX/2+40, 16); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
 		v.Frame = false
 		fmt.Fprintf(v, logo)
-		versionStr := "version: " + version.HarvesterVersion + " - CARBIDE"
+		versionStr := "version: " + version.HarvesterVersion
 		logoLength := 74
 		nSpace := logoLength - len(versionStr)
 		fmt.Fprintf(v, "\n%*s", nSpace, "")
