@@ -65,7 +65,7 @@ docker rm $(<os-img-container) && rm -f os-img-container
 find $BUNDLE_DIR -type f -exec chmod +r {} +
 
 # build ISO
-ISO_PREFIX="${PROJECT_PREFIX}-${ARCH}"
+ISO_PREFIX="${PROJECT_PREFIX}-carbide-${ARCH}"
 cp harvester-release.yaml iso
 echo "set harvester_version=${VERSION}" > iso/boot/grub2/harvester.cfg
 
