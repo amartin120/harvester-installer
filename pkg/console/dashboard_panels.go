@@ -42,8 +42,16 @@ const (
 ███████║███████║█████╔╝╚██╗░░██╔╝█████╗░░╚█████╗░░░░██║░░░█████╗░░██████╔╝
 ██╔══██║██╔══██║██╔══██╗░╚████╔╝░██╔══╝░░░╚═══██╗░░░██║░░░██╔══╝░░██╔══██╗
 ██║░░██║██║░░██║██║░░██║░░╚██╔╝░░███████╗██████╔╝░░░██║░░░███████╗██║░░██║
-╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░╚══════╝╚═════╝░░░░╚═╝░░░╚══════╝╚═╝░░╚═╝`
+╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░╚══════╝╚═════╝░░░░╚═╝░░░╚══════╝╚═╝░░╚═╝
+        ░██████╗░█████╗░██████╗░██████╗░████████╗██████╗░███████╗
+        ██╔════╝██╔══██╗██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗██╔════╝
+        ██║░░░░░███████║██████╔╝██████╔╝░░░██║░░░██║░░██║█████╗░░
+        ██║░░░░░██╔══██║██╔══██╗██╔══██╗░░░██║░░░██║░░██║██╔══╝░░
+        ╚██████╗██║░░██║██║░░██║██████╔╝████████╗██████╔╝███████╗
+        ░╚═════╝╚═╝░░╚═╝╚═╝░░╚═╝╚═════╝░╚═══════╝╚═════╝░╚══════╝`
 )
+
+
 
 type state struct {
 	installed     bool
@@ -86,13 +94,13 @@ func (c *Console) layoutDashboard(g *gocui.Gui) error {
 
 func clusterPanel(g *gocui.Gui) error {
 	maxX, _ := g.Size()
-	if v, err := g.SetView("clusterPanel", maxX/2-40, 10, maxX/2+35, 15); err != nil {
+	if v, err := g.SetView("clusterPanel", maxX/2-40, 16, maxX/2+35, 21); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
 		v.Title = " Harvester Cluster "
 	}
-	if v, err := g.SetView("managementUrl", maxX/2-39, 10, maxX/2+34, 13); err != nil {
+	if v, err := g.SetView("managementUrl", maxX/2-39, 16, maxX/2+34, 19); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -101,7 +109,7 @@ func clusterPanel(g *gocui.Gui) error {
 		fmt.Fprintln(v, "* Management URL:\n  loading...")
 		go syncManagementURL(context.Background(), g)
 	}
-	if v, err := g.SetView("clusterStatus", maxX/2-39, 13, maxX/2+34, 15); err != nil {
+	if v, err := g.SetView("clusterStatus", maxX/2-39, 19, maxX/2+34, 21); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -115,13 +123,13 @@ func clusterPanel(g *gocui.Gui) error {
 
 func nodePanel(g *gocui.Gui) error {
 	maxX, _ := g.Size()
-	if v, err := g.SetView("nodePanel", maxX/2-40, 16, maxX/2+35, 21); err != nil {
+	if v, err := g.SetView("nodePanel", maxX/2-40, 22, maxX/2+35, 27); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
 		v.Title = " Node "
 	}
-	if v, err := g.SetView("nodeInfo", maxX/2-39, 16, maxX/2+34, 19); err != nil {
+	if v, err := g.SetView("nodeInfo", maxX/2-39, 22, maxX/2+34, 25); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -130,7 +138,7 @@ func nodePanel(g *gocui.Gui) error {
 		fmt.Fprintln(v, "* Hostname: loading...\n* IP Address: loading...")
 		go syncNodeInfo(context.Background(), g)
 	}
-	if v, err := g.SetView("nodeStatus", maxX/2-39, 19, maxX/2+34, 21); err != nil {
+	if v, err := g.SetView("nodeStatus", maxX/2-39, 25, maxX/2+34, 27); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}
@@ -156,7 +164,7 @@ func footer(g *gocui.Gui) error {
 
 func logoPanel(g *gocui.Gui) error {
 	maxX, _ := g.Size()
-	if v, err := g.SetView("logo", maxX/2-40, 1, maxX/2+40, 9); err != nil {
+	if v, err := g.SetView("logo", maxX/2-40, 1, maxX/2+40, 16); err != nil {
 		if err != gocui.ErrUnknownView {
 			return err
 		}

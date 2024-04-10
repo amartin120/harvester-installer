@@ -13,6 +13,8 @@ if [[ -n "$DIRTY" ]]; then
     VERSION="${COMMIT}${DIRTY}"
 fi
 
+VERSION="v1.3.0"
+
 if [ -z "$ARCH" ]; then
     ARCH=$(go env GOHOSTARCH)
 fi
