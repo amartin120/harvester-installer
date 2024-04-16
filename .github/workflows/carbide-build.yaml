@@ -1,0 +1,17 @@
+name: carbide-build
+
+on:
+  push:
+    branches:
+      - 'v*-carbide'
+
+jobs:
+  main:
+    name: Build and deploy
+    runs-on:
+      - linux-amd64
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build Harvester artifacts
+        run: |
+          make
